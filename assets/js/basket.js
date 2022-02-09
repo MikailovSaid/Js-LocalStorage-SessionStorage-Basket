@@ -14,56 +14,26 @@ getProductList(products);
 function getProductList(list) {
     for (const product of list) {
         table.lastElementChild.innerHTML += `<tr>
-        <th>
+        <th data-id="${product.Id}">
             <img src="${product.img}" style="height:100px" alt="">
         </th>
         <td style="padding-top: 45px">${product.name}</td>
         <td style="padding-top: 45px; padding-left: 25px;">${product.count}</td>
         <td id="x-button" style="padding-top: 45px; padding-left: 20px; cursor: pointer;"><i class="fas fa-times"></i></td>
         </tr>`;
-
-
-
-
-
-        // btn.onclick = function (e) {
-        //     e.preventDefault();
-        //     let productId = this.parentNode.parentNode.getAttribute("data-id");
-        //     let productImg = this.parentNode.previousElementSibling.getAttribute("src");
-        //     let productName = this.parentNode.firstElementChild.innerText;
-        //     let existProduct = products.find(m => m.id == productId);
-
-        //     if (existProduct == undefined) {
-        //         products.push({
-        //             id: productId,
-        //             img: productImg,
-        //             name: productName,
-        //             count: 1
-        //         })
-        //     } else {
-        //         existProduct.count += 1;
-        //     }
-
-        //     localStorage.setItem("products", JSON.stringify(products));
-        //     countElem.innerText = getProductCount(products);
-        // }
-
     }
 }
 let xBtn = document.querySelectorAll("#x-button");
 xBtn.forEach(btn=>{
     btn.onclick = function () {
-        let productName = btn.parentNode.parentNode.previousElementSibling.innerHTML;
-        console.log(productName);
-        for (let product = 0; product < products.length; product++) {
-            if (products[product].productName=productName) {
-                products.splice(product,1);
-                localStorage.setItem('product', JSON.stringify(product));
-            }
-            
-            
+        for (const product of products) {
+            let id = this.parentNode.firstElementChild.getAttribute("data-id");
+            products.splice(product,1);
+            localStorage.setItem("products", JSON.stringify(products));
         }
-        // btn.parentNode.parentNode.innerHTML="";
+        btn.parentNode.innerHTML="";
+        countElem.innerText = getProductCount(products);
+
     }
 })
 // for (const item of xBtn) {
